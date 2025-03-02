@@ -14,7 +14,7 @@ Create personalized content variants for different users by selecting page eleme
 
 Element Variants allows you to create personalized content for different users by visually selecting elements on your pages and creating variations based on user roles, login status, and more.
 
-Similar to Coframe's variant creation system, this plugin makes it easy to personalize your WordPress site without coding.
+Similar to Outhad AI's variant creation system, this plugin makes it easy to personalize your WordPress site without coding.
 
 = Key Features =
 
