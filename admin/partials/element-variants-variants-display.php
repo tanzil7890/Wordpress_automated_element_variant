@@ -174,6 +174,9 @@ if ($action === 'edit' && $variant_id > 0) {
                                         <option value="user_role" <?php selected($condition['type'], 'user_role'); ?>><?php _e('User Role', 'element-variants'); ?></option>
                                         <option value="user_logged_in" <?php selected($condition['type'], 'user_logged_in'); ?>><?php _e('User Logged In', 'element-variants'); ?></option>
                                         <option value="user_id" <?php selected($condition['type'], 'user_id'); ?>><?php _e('User ID', 'element-variants'); ?></option>
+                                        <option value="referrer_host" <?php selected($condition['type'], 'referrer_host'); ?>><?php _e('Referrer Host', 'element-variants'); ?></option>
+                                        <option value="referrer_url" <?php selected($condition['type'], 'referrer_url'); ?>><?php _e('Referrer URL', 'element-variants'); ?></option>
+                                        <option value="from_url_shortener" <?php selected($condition['type'], 'from_url_shortener'); ?>><?php _e('From URL Shortener', 'element-variants'); ?></option>
                                     </select>
                                 </div>
                                 
@@ -201,11 +204,34 @@ if ($action === 'edit' && $variant_id > 0) {
                                         </select>
                                     <?php elseif ($condition['type'] === 'user_id') : ?>
                                         <label for="condition_value_<?php echo $index; ?>"><?php _e('User ID', 'element-variants'); ?></label>
-                                        <input type="number" name="condition_value[]" id="condition_value_<?php echo $index; ?>" value="<?php echo esc_attr($condition['value']); ?>" placeholder="<?php _e('User ID', 'element-variants'); ?>">
-                                        <p class="element-variants-description"><?php _e('Enter the WordPress user ID.', 'element-variants'); ?></p>
-                                    <?php else : ?>
-                                        <label for="condition_value_<?php echo $index; ?>"><?php _e('Value', 'element-variants'); ?></label>
-                                        <input type="text" name="condition_value[]" id="condition_value_<?php echo $index; ?>" value="<?php echo esc_attr($condition['value']); ?>">
+                                        <input type="number" name="condition_value[]" id="condition_value_<?php echo $index; ?>" value="<?php echo esc_attr($condition['value']); ?>">
+                                    <?php elseif ($condition['type'] === 'referrer_host') : ?>
+                                        <label for="condition_value_<?php echo $index; ?>"><?php _e('Referrer Hosts', 'element-variants'); ?></label>
+                                        <textarea name="condition_value[]" id="condition_value_<?php echo $index; ?>" rows="3"><?php 
+                                            if (is_array($condition['value'])) {
+                                                echo esc_textarea(implode("\n", $condition['value']));
+                                            } else {
+                                                echo esc_textarea($condition['value']);
+                                            }
+                                        ?></textarea>
+                                        <p class="element-variants-description"><?php _e('Enter domain names (one per line). The variant will show if the referrer domain contains any of these values.', 'element-variants'); ?></p>
+                                    <?php elseif ($condition['type'] === 'referrer_url') : ?>
+                                        <label for="condition_value_<?php echo $index; ?>"><?php _e('Referrer URLs', 'element-variants'); ?></label>
+                                        <textarea name="condition_value[]" id="condition_value_<?php echo $index; ?>" rows="3"><?php 
+                                            if (is_array($condition['value'])) {
+                                                echo esc_textarea(implode("\n", $condition['value']));
+                                            } else {
+                                                echo esc_textarea($condition['value']);
+                                            }
+                                        ?></textarea>
+                                        <p class="element-variants-description"><?php _e('Enter URL parts (one per line). The variant will show if the referrer URL contains any of these values.', 'element-variants'); ?></p>
+                                    <?php elseif ($condition['type'] === 'from_url_shortener') : ?>
+                                        <label for="condition_value_<?php echo $index; ?>"><?php _e('Coming From URL Shortener', 'element-variants'); ?></label>
+                                        <select name="condition_value[]" id="condition_value_<?php echo $index; ?>">
+                                            <option value="1" <?php selected($condition['value'], true); ?>><?php _e('Yes', 'element-variants'); ?></option>
+                                            <option value="0" <?php selected($condition['value'], false); ?>><?php _e('No', 'element-variants'); ?></option>
+                                        </select>
+                                        <p class="element-variants-description"><?php _e('Show this variant when the user comes from a URL shortener service.', 'element-variants'); ?></p>
                                     <?php endif; ?>
                                 </div>
                                 

@@ -117,6 +117,26 @@
                     text = 'User ID: ' + condition.value;
                     break;
                     
+                case 'referrer_host':
+                    text = 'Referrer host: ' + (Array.isArray(condition.value) ? 
+                        (condition.value.length > 2 ? 
+                            condition.value.slice(0, 2).join(', ') + '...' : 
+                            condition.value.join(', ')
+                        ) : condition.value);
+                    break;
+                    
+                case 'referrer_url':
+                    text = 'Referrer URL: ' + (Array.isArray(condition.value) ? 
+                        (condition.value.length > 2 ? 
+                            condition.value.slice(0, 2).join(', ') + '...' : 
+                            condition.value.join(', ')
+                        ) : condition.value);
+                    break;
+                    
+                case 'from_url_shortener':
+                    text = 'From URL shortener: ' + (condition.value ? 'Yes' : 'No');
+                    break;
+                    
                 default:
                     text = condition.type + ': ' + condition.value;
             }
@@ -162,6 +182,9 @@
                         <option value="user_role">User Role</option>
                         <option value="user_logged_in">User Logged In</option>
                         <option value="user_id">User ID</option>
+                        <option value="referrer_host">Referrer Host</option>
+                        <option value="referrer_url">Referrer URL</option>
+                        <option value="from_url_shortener">From URL Shortener</option>
                     </select>
                 </div>
                 <div class="element-variants-form-row condition-value-container">
@@ -215,6 +238,33 @@
                     <label for="condition_value_${index}">User ID</label>
                     <input type="number" name="condition_value[]" id="condition_value_${index}" value="" placeholder="User ID">
                     <p class="element-variants-description">Enter the WordPress user ID.</p>
+                `);
+                break;
+                
+            case 'referrer_host':
+                container.html(`
+                    <label for="condition_value_${index}">Referrer Hosts</label>
+                    <textarea name="condition_value[]" id="condition_value_${index}" rows="3" placeholder="example.com&#10;another-site.com"></textarea>
+                    <p class="element-variants-description">Enter domain names (one per line). The variant will show if the referrer domain contains any of these values.</p>
+                `);
+                break;
+                
+            case 'referrer_url':
+                container.html(`
+                    <label for="condition_value_${index}">Referrer URLs</label>
+                    <textarea name="condition_value[]" id="condition_value_${index}" rows="3" placeholder="example.com/page&#10;?utm_source=newsletter"></textarea>
+                    <p class="element-variants-description">Enter URL parts (one per line). The variant will show if the referrer URL contains any of these values.</p>
+                `);
+                break;
+                
+            case 'from_url_shortener':
+                container.html(`
+                    <label for="condition_value_${index}">Coming From URL Shortener</label>
+                    <select name="condition_value[]" id="condition_value_${index}">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                    <p class="element-variants-description">Show this variant when the user comes from a URL shortener service.</p>
                 `);
                 break;
                 
