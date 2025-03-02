@@ -103,7 +103,7 @@
 
 .element-variants-condition {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 10px;
     gap: 8px;
 }
@@ -116,6 +116,28 @@
 
 .element-variants-condition .condition-value-container {
     flex: 2;
+}
+
+.element-variants-condition textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 8px;
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    font-size: 13px;
+    line-height: 1.5;
+    resize: vertical;
+}
+
+.element-variants-help-text {
+    margin: 5px 0 0;
+    font-size: 12px;
+    color: #646970;
+    line-height: 1.4;
+}
+
+.element-variants-condition select[multiple] {
+    min-height: 100px;
 }
 
 /* Buttons */
