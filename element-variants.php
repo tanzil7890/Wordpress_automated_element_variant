@@ -33,8 +33,13 @@ add_action('plugins_loaded', 'element_variants_init');
 // Register activation hook
 register_activation_hook(__FILE__, 'element_variants_activate');
 function element_variants_activate() {
-    // Create necessary database tables and initialize settings
+    // Load all required files for activation
+    require_once ELEMENT_VARIANTS_PATH . 'includes/class-element-variants-db.php';
+    require_once ELEMENT_VARIANTS_PATH . 'includes/class-element-variants-manager.php';
+    require_once ELEMENT_VARIANTS_PATH . 'includes/class-element-variants-selector.php';
     require_once ELEMENT_VARIANTS_PATH . 'includes/class-element-variants-activator.php';
+    
+    // Create necessary database tables and initialize settings
     Element_Variants_Activator::activate();
 }
 

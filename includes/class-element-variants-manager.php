@@ -15,6 +15,10 @@ class Element_Variants_Manager {
      * Initialize the class and set its properties.
      */
     public function __construct() {
+        // Make sure the DB class is loaded
+        if (!class_exists('Element_Variants_DB')) {
+            require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-element-variants-db.php';
+        }
         $this->db = new Element_Variants_DB();
     }
 

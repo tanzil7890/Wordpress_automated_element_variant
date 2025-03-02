@@ -8,6 +8,11 @@ class Element_Variants_Activator {
      * Execute actions during plugin activation.
      */
     public static function activate() {
+        // Load all required classes
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-element-variants-db.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-element-variants-manager.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-element-variants-selector.php';
+        
         // Create necessary database tables
         $db = new Element_Variants_DB();
         $db->create_tables();
@@ -33,6 +38,8 @@ class Element_Variants_Activator {
      */
     private static function maybe_add_sample_variant() {
         global $wpdb;
+        
+        // No need to require classes here as they're already loaded in the activate method
         
         // Check if we already have variants
         $table_name = $wpdb->prefix . 'element_variants';
