@@ -24,18 +24,6 @@
                 <table class="form-table">
                     <tr>
                         <th scope="row">
-                            <label for="element_variants_show_all_users"><?php _e('Audience', 'element-variants'); ?></label>
-                        </th>
-                        <td>
-                            <label>
-                                <input type="checkbox" name="element_variants_show_all_users" value="1" <?php checked(get_option('element_variants_show_all_users', true)); ?>>
-                                <?php _e('Show variants to all users, including non-logged-in visitors', 'element-variants'); ?>
-                            </label>
-                            <p class="description"><?php _e('Enable this to show variants to all visitors based on conditions like referrer URL or URL shortener. Disable to restrict variants to specific user roles only.', 'element-variants'); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
                             <label for="element_variants_user_roles"><?php _e('User Roles', 'element-variants'); ?></label>
                         </th>
                         <td>

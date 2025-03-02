@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name: Outhad AI ELement Variant
- * Plugin URI: https://outhad.com/element-variants
+ * Plugin Name: Element Variants
+ * Plugin URI: https://example.com/element-variants
  * Description: A plugin that allows users to select page elements and create variations for different users.
  * Version: 1.0.0
- * Author: Outhad AI
+ * Author: Element Variants Team
  * Author URI: https://example.com
  * Text Domain: element-variants
  * License: GPL v2 or later

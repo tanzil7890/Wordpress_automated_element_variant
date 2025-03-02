@@ -95,52 +95,7 @@
                     }
                     break;
                     
-                case 'referrer_host':
-                    // If there's no referrer, this condition fails
-                    if (!userData.referrer_host) {
-                        return false;
-                    }
-                    
-                    // Check if the referrer host contains any of the specified domains
-                    let hostMatch = false;
-                    for (let j = 0; j < condition.value.length; j++) {
-                        if (userData.referrer_host.includes(condition.value[j])) {
-                            hostMatch = true;
-                            break;
-                        }
-                    }
-                    
-                    if (!hostMatch) {
-                        return false;
-                    }
-                    break;
-                    
-                case 'referrer_url':
-                    // If there's no referrer, this condition fails
-                    if (!userData.referrer) {
-                        return false;
-                    }
-                    
-                    // Check if the referrer URL contains any of the specified strings
-                    let urlMatch = false;
-                    for (let j = 0; j < condition.value.length; j++) {
-                        if (userData.referrer.includes(condition.value[j])) {
-                            urlMatch = true;
-                            break;
-                        }
-                    }
-                    
-                    if (!urlMatch) {
-                        return false;
-                    }
-                    break;
-                    
-                case 'from_url_shortener':
-                    // Check if the shortener condition matches
-                    if (userData.is_from_shortener !== condition.value) {
-                        return false;
-                    }
-                    break;
+                // Add more condition types as needed
             }
         }
         

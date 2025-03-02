@@ -303,35 +303,17 @@
             
             const valueContainer = $(this).find('.condition-value-container');
             
-            // Get the value based on the condition type
-            switch (type) {
-                case 'user_role':
-                    // Multi-select for roles
-                    value = valueContainer.find('select').val() || [];
-                    break;
-                    
-                case 'user_logged_in':
-                case 'from_url_shortener':
-                    // Boolean values
-                    value = valueContainer.find('select').val() === '1';
-                    break;
-                    
-                case 'user_id':
-                    // Numeric value
-                    value = parseInt(valueContainer.find('input').val(), 10);
-                    break;
-                    
-                case 'referrer_host':
-                case 'referrer_url':
-                    // Split textarea content into array
-                    const text = valueContainer.find('textarea').val();
-                    value = text.split('\n')
-                        .map(line => line.trim())
-                        .filter(line => line !== '');
-                    break;
-                    
-                default:
-                    value = valueContainer.find('input').val();
+            // Get the value based on the input type
+            if (valueContainer.find('select').length) {
+                if (valueContainer.find('select').prop('multiple')) {
+                    value = valueContainer.find('select').val();
+                } else {
+                    value = valueContainer.find('select').val();
+                }
+            } else if (valueContainer.find('input[type="checkbox"]').length) {
+                value = valueContainer.find('input[type="checkbox"]').prop('checked');
+            } else {
+                value = valueContainer.find('input').val();
             }
             
             conditions.push({
@@ -356,15 +338,15 @@
                 if (response.success) {
                     alert('Variant saved successfully!');
                     hideEditorPanel();
-                    disableSelectionMode();
                     state.selectedElement = null;
                     state.selectedSelector = '';
+                    state.editing = false;
                 } else {
-                    alert('Error saving variant: ' + response.data);
+                    alert('Error: ' + response.data);
                 }
             },
             error: function() {
-                alert('Error saving variant. Please try again.');
+                alert('An error occurred while saving the variant.');
             }
         });
     }
@@ -377,9 +359,6 @@
                     <option value="user_role">User Role</option>
                     <option value="user_logged_in">User Logged In</option>
                     <option value="user_id">User ID</option>
-                    <option value="referrer_host">Referrer Host</option>
-                    <option value="referrer_url">Referrer URL</option>
-                    <option value="from_url_shortener">From URL Shortener</option>
                 </select>
                 <div class="condition-value-container"></div>
                 <button type="button" class="element-variants-btn element-variants-btn-sm element-variants-btn-danger remove-condition">
@@ -417,44 +396,24 @@
                 break;
                 
             case 'user_logged_in':
-            case 'from_url_shortener':
-                // Dropdown for boolean values
+                // Checkbox for boolean
                 container.html(`
-                    <select name="condition_value">
-                        <option value="1">${type === 'user_logged_in' ? 'Yes' : 'Coming from URL Shortener'}</option>
-                        <option value="0">${type === 'user_logged_in' ? 'No' : 'Not from URL Shortener'}</option>
-                    </select>
+                    <label>
+                        <input type="checkbox" name="condition_value" checked>
+                        Must be logged in
+                    </label>
                 `);
                 break;
                 
             case 'user_id':
-                // Number input for user ID
+                // Text input for user ID
                 container.html(`
-                    <input type="number" name="condition_value" placeholder="Enter user ID">
-                `);
-                break;
-                
-            case 'referrer_host':
-            case 'referrer_url':
-                // Textarea for multiple values
-                container.html(`
-                    <textarea name="condition_value" rows="3" placeholder="${
-                        type === 'referrer_host' 
-                            ? 'Enter domain names (one per line):\nexample.com\nanother-site.com' 
-                            : 'Enter URL parts (one per line):\nexample.com/page\n?utm_source=newsletter'
-                    }"></textarea>
-                    <p class="element-variants-help-text">${
-                        type === 'referrer_host'
-                            ? 'Enter domain names that users should be coming from.'
-                            : 'Enter URL parts that should be present in the referrer URL.'
-                    }</p>
+                    <input type="number" name="condition_value" placeholder="User ID">
                 `);
                 break;
                 
             default:
-                container.html(`
-                    <input type="text" name="condition_value" placeholder="Enter value">
-                `);
+                container.html(`<input type="text" name="condition_value">`);
         }
     }
 

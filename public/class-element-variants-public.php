@@ -101,15 +101,7 @@ class Element_Variants_Public {
      * @return bool Whether the current user can see variants.
      */
     private function can_user_see_variants() {
-        // Check if variants should be shown to all users
-        $show_all_users = get_option('element_variants_show_all_users', true);
-        
-        if ($show_all_users) {
-            return true;
-        }
-        
-        // If not showing to all users, check user roles
-        // Only logged-in users with specific roles can see variants
+        // If no user is logged in, they can't see variants
         if (!is_user_logged_in()) {
             return false;
         }
@@ -131,78 +123,28 @@ class Element_Variants_Public {
     }
 
     /**
-     * Get data about the current user.
+     * Get data about the current user for variant conditions.
      *
      * @return array User data.
      */
     private function get_current_user_data() {
-        // Get referrer information for all users
-        $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
-        $referrer_host = $referrer ? parse_url($referrer, PHP_URL_HOST) : '';
-        
-        // Basic data for all users including referrer info
-        $data = array(
-            'logged_in' => is_user_logged_in(),
-            'referrer' => $referrer,
-            'referrer_host' => $referrer_host,
-            'is_from_shortener' => $this->is_from_url_shortener($referrer_host),
-        );
-        
-        // If no user is logged in, return just the basic data
+        // If no user is logged in, return empty data
         if (!is_user_logged_in()) {
-            return $data;
+            return array(
+                'logged_in' => false,
+            );
         }
         
         // Get the current user
         $user = wp_get_current_user();
         
-        // Add user-specific data
-        $data = array_merge($data, array(
+        return array(
+            'logged_in' => true,
             'id' => $user->ID,
             'roles' => $user->roles,
             'username' => $user->user_login,
             'email' => $user->user_email,
-        ));
-        
-        return $data;
-    }
-    
-    /**
-     * Check if a host is a known URL shortener.
-     *
-     * @param string $host The host to check.
-     * @return bool Whether the host is from a URL shortener.
-     */
-    private function is_from_url_shortener($host) {
-        if (empty($host)) {
-            return false;
-        }
-        
-        // List of common URL shorteners
-        $shorteners = array(
-            'bit.ly',
-            'tinyurl.com',
-            'goo.gl',
-            'ow.ly',
-            't.co',
-            'is.gd',
-            'buff.ly',
-            'rebrand.ly',
-            'cutt.ly',
-            'tiny.cc',
-            'shorturl.at',
-            's.id',
-            'adf.ly',
-            // Add more as needed
         );
-        
-        foreach ($shorteners as $shortener) {
-            if (strpos($host, $shortener) !== false) {
-                return true;
-            }
-        }
-        
-        return false;
     }
 
     /**

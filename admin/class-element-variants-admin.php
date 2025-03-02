@@ -97,13 +97,6 @@ class Element_Variants_Admin {
             'default' => array('administrator', 'editor'),
         ));
         
-        register_setting('element_variants_settings', 'element_variants_show_all_users', array(
-            'type' => 'boolean',
-            'description' => 'Show variants to all users, including non-logged-in visitors',
-            'sanitize_callback' => 'rest_sanitize_boolean',
-            'default' => true,
-        ));
-        
         register_setting('element_variants_settings', 'element_variants_enable_editor', array(
             'type' => 'boolean',
             'description' => 'Enable frontend editor',
