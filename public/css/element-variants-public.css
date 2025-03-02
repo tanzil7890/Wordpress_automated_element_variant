@@ -1,0 +1,54 @@
+/**
+ * Element Variants Public CSS
+ */
+
+/* Applied Variants */
+.element-variants-applied {
+    /* Add a subtle transition for content changes if needed */
+    transition: all 0.3s ease;
+}
+
+/* Optional: Add a visual indicator for developers/admins, hidden in production */
+body.element-variants-debug .element-variants-applied {
+    position: relative;
+    outline: 1px dashed rgba(34, 113, 177, 0.3);
+    outline-offset: 2px;
+}
+
+body.element-variants-debug .element-variants-applied::after {
+    content: attr(data-variant-id);
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgba(34, 113, 177, 0.8);
+    color: #fff;
+    padding: 2px 4px;
+    font-size: 10px;
+    border-radius: 2px;
+    z-index: 999;
+    opacity: 0.8;
+}
+
+/* Ensure variants don't break layouts */
+.element-variants-applied img {
+    max-width: 100%;
+    height: auto;
+}
+
+.element-variants-applied * {
+    box-sizing: border-box;
+}
+
+/* Fade in effect for newly applied variants */
+@keyframes elementVariantsFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.element-variants-applied.element-variants-fade-in {
+    animation: elementVariantsFadeIn 0.3s ease-in-out;
+} 
